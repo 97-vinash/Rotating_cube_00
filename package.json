@@ -1,0 +1,19 @@
+{
+  "name": "three_00",
+  "version": "1.0.0",
+  "description": "A Three.js project built with Parcel",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "npx parcel build src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.167.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0"
+  }
+}
