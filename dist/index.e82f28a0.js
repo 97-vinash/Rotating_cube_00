@@ -590,21 +590,26 @@ const renderer = new _three.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 const scene = new _three.Scene();
-const camera = new _three.PerspectiveCamera(37, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new _three.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
 const orbit = new (0, _orbitControlsJs.OrbitControls)(camera, renderer.domElement);
-const axesHelper = new _three.AxesHelper(2);
-scene.add(axesHelper);
-camera.position.set(6, 6, 6);
-orbit.update();
+orbit.enableDamping = true;
+orbit.dampingFactor = 0.04;
+// const axesHelper = new THREE.AxesHelper(2);
+// scene.add(axesHelper);
+const hemiLight = new _three.HemisphereLight(0xADFF2F, 0x000000, 2);
+scene.add(hemiLight);
+camera.position.set(0, 0, 10);
+// camera.rotation.y = Math.PI / 4;
 const boxGeometry = new _three.BoxGeometry();
-const boxMaterial = new _three.MeshBasicMaterial({
-    color: 0xADFF2F
-});
+const boxMaterial = new _three.MeshStandardMaterial({
+    color: 0xffffff,
+    flatShading: true
+}); //0xADFF2F - light green
 const box = new _three.Mesh(boxGeometry, boxMaterial);
 // scene.add(box);
 const edgesGeometry = new (0, _three.EdgesGeometry)(box.geometry);
 const edgesMaterial = new (0, _three.LineBasicMaterial)({
-    color: 0x000000
+    color: 0xffffff
 });
 const edges = new (0, _three.LineSegments)(edgesGeometry, edgesMaterial);
 // scene.add(edges);
@@ -612,12 +617,14 @@ const boxGroup = new _three.Group();
 boxGroup.add(box);
 boxGroup.add(edges);
 scene.add(boxGroup);
-const gridHelper = new _three.GridHelper();
-scene.add(gridHelper);
+// boxGroup.position.set(0, 1.5, 0);
+// const gridHelper = new THREE.GridHelper();
+// scene.add(gridHelper);
 function animate() {
-    boxGroup.rotation.x += 0.04;
-    boxGroup.rotation.y += 0.04;
+    boxGroup.rotation.x += 0.0008;
+    boxGroup.rotation.y += 0.0008;
     renderer.render(scene, camera);
+    orbit.update();
 }
 renderer.setAnimationLoop(animate);
 
